@@ -3,7 +3,6 @@ package com.spring.rest_spring.controller;
 import com.spring.rest_spring.entity.Flower;
 import com.spring.rest_spring.service.FlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class FlowerController {
 
-    @Autowired(required=false)
-    private FlowerService flowerService;
+
+    private final FlowerService flowerService;
+
+    @Autowired
+    public FlowerController(FlowerService flowerService) {
+        this.flowerService = flowerService;
+    }
 
     @GetMapping("/flowers")
     public List<Flower> showAllFlowers(){
@@ -36,11 +40,11 @@ public class FlowerController {
         return flower;
     }
 
-    @PostMapping("/flowers")
-    public Flower updateFlower(@RequestBody Flower flower){
-        flowerService.saveFlower(flower);
-        return flower;
-    }
+//    @PostMapping("/flowers")
+//    public Flower updateFlower(@RequestBody Flower flower){
+//        flowerService.saveFlower(flower);
+//        return flower;
+//    }
 
     @DeleteMapping("/flowers/{id}")
     public String deleteFlower(@PathVariable int id){
